@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 from __future__ import print_function
 from googleapiclient.discovery import build
@@ -40,7 +40,6 @@ class TextEditorNotFound(Exception):
 
 
 class Tamara(object):
-	global OS
 	def __init__(self):
 		self.chars = string.ascii_letters + string.digits
 		if os.name not in __OS__:
@@ -50,7 +49,9 @@ class Tamara(object):
 				self.OS = 'posix'
 
 			else:
-				self.OS = 'nt'		
+				self.OS = 'nt'	
+				
+		start_talking()	
 
 	def make_filename(self):
 		"""
@@ -76,7 +77,7 @@ class Tamara(object):
 		filename = self.make_filename() + '.mp3'
 		tts.save(filename)   # The .mp3 file will be deleted later.
 		playsound.playsound(filename)
-
+		print(text)
 		if self.OS == 'posix':
 			os.system(f"rm -rf {filename}")
 		else:
@@ -214,15 +215,12 @@ class Tamara(object):
 
 		if hour >= 0 and hour < 12:
 		    self.speak("Good morning.")
-		    print("Good morning.")
 
 		elif hour >= 12 and hour < 18:
 		    self.speak("Good afternoon.")
-		    print("Good afternoon.")
 
 		else:
 		    self.speak("Good evening.")
-		    print("Good evening.")
 
 		# TODO: consider adding a welcome tone with the users name.
 
@@ -230,7 +228,6 @@ class Tamara(object):
 		# time = datetime.datetime.now().strftime("%H:%M:%S")
 		# TODO: add a file that will help Tamara know if she's been used before. 
 		self.speak(f"My name is Tamara. How may i help you?")
-		print("My name is Tamara. How may i help you?")
 
 	def make_notes(self, text):
 		date = datetime.datetime.now()
@@ -242,16 +239,11 @@ class Tamara(object):
 			if not os.path.isfile('/usr/bin/mousepad'):
 				raise TextEditorNotFound("Please install mousepad.")
 			else:
-				os.system("/user/bin/mousepad")
+				os.system("/usr/bin/mousepad")
 		else:
 			subprocess.Popen(['notepad.exe', filename])
 
 
 if __name__ == '__main__':
-	Tamara().start_talking()
-	while True:
-		query = Tamara().take_command().lower()
-
-		print(query)
-		break
+	pass
 
