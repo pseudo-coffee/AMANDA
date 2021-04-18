@@ -1,4 +1,4 @@
-# AMANDA
+# Tamara
 
 ---
 
@@ -9,7 +9,7 @@ Amanda is a voice assisstant that will help you with most of your common daily a
 #### linux distributions
 ```
 sudo apt-get install python3-pip
-git clone https://github.com/pseudo-coffee/amanda.git
+git clone https://github.com/pseudo-coffee/tamara.git
 cd amanda
 pip install -r requirements.txt
 ```
@@ -17,7 +17,7 @@ pip install -r requirements.txt
 *make sure to install python3.x and pip.*
 **open cmd.exe**
 ```
-git clone https://github.com/pseudo-coffee/amanda.git
+git clone https://github.com/pseudo-coffee/tamara.git
 cd amanda
 pip install -r requirements.txt 
 ```
@@ -26,4 +26,4 @@ pip install -r requirements.txt
 If you encounter problems with the installation of PyAudio, then navigate to [this guide](https://amanda.github.io/) for assisstance.
 
 
-# Amanda.0.1.0
+# Tamara.0.1.0
