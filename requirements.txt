@@ -6,3 +6,4 @@ SpeechRecognition
 wikipedia
 gTTS
 playsound
+pyaudio

@@ -32,12 +32,25 @@ import playsound
 SCOPES = ['https://www.googleapis.com/calendar.readonly']
 DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 MONTHS = ["january", "febuary", "march", "april", "may", "june" ,"july" ,"august", "september", "october", "november", "december"]
-OS = ['posix', 'nt']
+__OS__ = ['posix', 'nt']
+
+
+class TextEditorNotFound(Exception):
+	"""Return an error if the Text Editor isnt found."""
 
 
 class Amanda(object):
+	global OS
 	def __init__(self):
 		self.chars = string.ascii_letters + string.digits
+		if os.name not in __OS__:
+			raise OSError("Your operating system is not compatible with Amanda.")
+		else:
+			if os.name == __OS__[0]:
+				self.OS = 'posix'
+
+			else:
+				self.OS = 'nt'		
 
 	def make_filename(self):
 		"""
@@ -64,8 +77,8 @@ class Amanda(object):
 		tts.save(filename)   # The .mp3 file will be deleted later.
 		playsound.playsound(filename)
 
-		if os.name == OS[0]:
-			os.system(f'rm -rf {filename}')
+		if self.OS == 'posix':
+			os.system(f"rm -rf {filename}")
 		else:
 			os.system(f'del /f {filename}')
 
@@ -92,6 +105,7 @@ class Amanda(object):
 			return None
 		return query
 
+	@staticmethod
 	def authenticate_google():
 		creds = None
 		if os.path.exists('token.pickle'):
@@ -126,9 +140,9 @@ class Amanda(object):
 		events = events_result.get('items', [])
 
 		if not events:
-			speak('No upcoming events found.')
+			self.speak('No upcoming events found.')
 		else:
-			speak(f'You have {len(events)} events on this day.')
+			self.speak(f'You have {len(events)} events on this day.')
 
 			for event in events:
 				start = event['start'].get('dateTime', event['start'].get('date'))
@@ -140,7 +154,7 @@ class Amanda(object):
 				else:
 					start_time = str(int(start_time.split(":")[0])-12)
 					start_time = start_time + "PM"
-				speak(event['summary'] + 'at' + start_time)
+				self.speak(event['summary'] + 'at' + start_time)
 
 	@staticmethod
 	def get_date(text):
@@ -195,6 +209,49 @@ class Amanda(object):
 					dif += 7
 			return today + datetime.date(month=month, day=day, year=year)
 
+	def start_talking(self):
+		hour = int(datetime.datetime.now().hour)
+
+		if hour >= 0 and hour < 12:
+		    self.speak("Good morning.")
+		    print("Good morning.")
+
+		elif hour >= 12 and hour < 18:
+		    self.speak("Good afternoon.")
+		    print("Good afternoon.")
+
+		else:
+		    self.speak("Good evening.")
+		    print("Good evening.")
+
+		# TODO: consider adding a welcome tone with the users name.
+
+		# date = datetime.datetime.now().date()
+		# time = datetime.datetime.now().strftime("%H:%M:%S")
+		# TODO: add a file that will help Amanda know if she's been used before. 
+		self.speak(f"My name is Amanda. How may i help you?")
+		print("My name is Amanda. How may i help you?")
+
+	def make_notes(self, text):
+		date = datetime.datetime.now()
+		filename = str(date).replace(":", "-") + "-note.txt"
+		with open(filename, 'w') as f:
+			f.write(text)
+
+		if self.OS == 'posix':
+			if not os.path.isfile('/usr/bin/mousepad'):
+				raise TextEditorNotFound("Please install mousepad.")
+			else:
+				os.system("/user/bin/mousepad")
+		else:
+			subprocess.Popen(['notepad.exe', filename])
+
 
 if __name__ == '__main__':
-	pass
+	Amanda().start_talking()
+	while True:
+		query = Amanda().take_command().lower()
+
+		print(query)
+		break
+
