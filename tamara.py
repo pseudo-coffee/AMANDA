@@ -39,12 +39,12 @@ class TextEditorNotFound(Exception):
 	"""Return an error if the Text Editor isnt found."""
 
 
-class Amanda(object):
+class Tamara(object):
 	global OS
 	def __init__(self):
 		self.chars = string.ascii_letters + string.digits
 		if os.name not in __OS__:
-			raise OSError("Your operating system is not compatible with Amanda.")
+			raise OSError("Your operating system is not compatible with Tamara.")
 		else:
 			if os.name == __OS__[0]:
 				self.OS = 'posix'
@@ -228,9 +228,9 @@ class Amanda(object):
 
 		# date = datetime.datetime.now().date()
 		# time = datetime.datetime.now().strftime("%H:%M:%S")
-		# TODO: add a file that will help Amanda know if she's been used before. 
-		self.speak(f"My name is Amanda. How may i help you?")
-		print("My name is Amanda. How may i help you?")
+		# TODO: add a file that will help Tamara know if she's been used before. 
+		self.speak(f"My name is Tamara. How may i help you?")
+		print("My name is Tamara. How may i help you?")
 
 	def make_notes(self, text):
 		date = datetime.datetime.now()
@@ -248,9 +248,9 @@ class Amanda(object):
 
 
 if __name__ == '__main__':
-	Amanda().start_talking()
+	Tamara().start_talking()
 	while True:
-		query = Amanda().take_command().lower()
+		query = Tamara().take_command().lower()
 
 		print(query)
 		break
