@@ -34,6 +34,7 @@ DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sun
 MONTHS = ["january", "febuary", "march", "april", "may", "june" ,"july" ,"august", "september", "october", "november", "december"]
 __OS__ = ['posix', 'nt']
 
+# TODO: fix the pyaudio error.
 
 class TextEditorNotFound(Exception):
 	"""Return an error if the Text Editor isnt found."""
@@ -51,7 +52,8 @@ class Tamara(object):
 			else:
 				self.OS = 'nt'	
 				
-		start_talking()	
+		self.start_talking()
+		self.take_command()
 
 	def make_filename(self):
 		"""
@@ -245,5 +247,4 @@ class Tamara(object):
 
 
 if __name__ == '__main__':
-	pass
-
+	Tamara()
