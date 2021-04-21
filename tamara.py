@@ -76,7 +76,7 @@ class Tamara(object):
 		Generate a voice. This will interact with the user.
 		"""
 		tts = gTTS(text=text, lang='en')
-		filename = self.make_filename() + '.mp3'
+		filename = 'tmp/' + self.make_filename() + '.mp3'
 		tts.save(filename)   # The .mp3 file will be deleted later.
 		playsound.playsound(filename)
 		print(text)
